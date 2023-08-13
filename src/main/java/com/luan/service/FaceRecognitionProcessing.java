@@ -1,6 +1,5 @@
 package com.luan.service;
 
-import com.luan.dto.FaceRecognitionResponseDTO;
 import com.luan.model.Person;
 
 import java.io.*;
@@ -9,58 +8,53 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 
-public class FaceRecognitionService {
+public class FaceRecognitionProcessing {
 
-    Person person;
-    Path tempFile;
-    StringBuilder output;
+    private Path dirImageOutputPath;
 
-    public FaceRecognitionResponseDTO faceDetected(Long personId, InputStream image) {
-        Person person = findById(personId);
-
-        Path tempFile = null;
-        StringBuilder output;
-
+    public boolean faceDetected(Person person, InputStream image) {
+        String output;
         try {
             String imageOutputPath = saveTemporaryImageAndReturnPath(person.getName(), image);
-            String command = String.format("face_recognition %s %s", imageOutputPath, person.getResourcePath());
-
-            Process process = Runtime.getRuntime().exec(command);
-            process.waitFor();
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            output = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
-                System.out.println(line);
-            }
+            output = requestCall(person, imageOutputPath);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         } finally {
             try {
-                Files.walk(tempFile)
+                Files.walk(dirImageOutputPath)
                         .sorted(Comparator.reverseOrder())
                         .forEach(path -> {
                             try {
                                 Files.delete(path);
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                            } catch (IOException ignored) {
                             }
                         });
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (IOException ignored) {
             }
         }
 
-        boolean faceDetected = !output.toString().contains("unknown_person");
-        String details = "Face detectada com sucesso";
-        return new FaceRecognitionResponseDTO(faceDetected, details);
+        return !output.contains("unknown_person");
+    }
+
+    private String requestCall(Person person, String imageOutputPath) throws IOException, InterruptedException {
+        StringBuilder output;
+        String command = String.format("face_recognition %s %s", imageOutputPath, person.getResourcePath());
+
+        Process process = Runtime.getRuntime().exec(command);
+        process.waitFor();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        output = new StringBuilder();
+        while ((line = reader.readLine()) != null) {
+            output.append(line).append("\n");
+        }
+        return output.toString();
     }
 
     public String saveTemporaryImageAndReturnPath(String person, InputStream image) throws IOException {
         String imageOutputPath = "/tmp/" + person.toLowerCase();
-        Path dirImageOutputPath = Paths.get(imageOutputPath);
+        this.dirImageOutputPath = Paths.get(imageOutputPath);
         if (!Files.exists(dirImageOutputPath)) {
             Files.createDirectories(dirImageOutputPath);
         }

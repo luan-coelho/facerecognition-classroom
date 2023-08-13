@@ -1,4 +1,4 @@
-package com.luan.pagination;
+package com.luan.commons.pagination;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

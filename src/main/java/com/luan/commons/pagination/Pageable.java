@@ -1,4 +1,4 @@
-package com.luan.pagination;
+package com.luan.commons.pagination;
 
 import jakarta.ws.rs.QueryParam;
 import lombok.Getter;

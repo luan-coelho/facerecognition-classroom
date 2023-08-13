@@ -8,6 +8,4 @@ public class MultipartData {
 
     @FormParam("file")
     public InputStream inputStream;
-
-
 }

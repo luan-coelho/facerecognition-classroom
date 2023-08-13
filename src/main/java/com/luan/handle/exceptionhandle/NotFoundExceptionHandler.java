@@ -1,4 +1,4 @@
-package com.conryfinance.handle.exceptionhandle;
+package com.luan.handle.exceptionhandle;
 
 import jakarta.ws.rs.NotFoundException;
 import org.jboss.resteasy.reactive.RestResponse;
