@@ -2,12 +2,16 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const snap = document.getElementById('snap');
 const button = document.getElementById('button-enviar');
-const fileInput = document.getElementById('file');
 const context = canvas.getContext('2d');
 
 navigator.mediaDevices.getUserMedia({video: true})
     .then(stream => video.srcObject = stream)
-    .catch(err => console.error("Erro ao acessar a webcam:", err));
+    .catch(() => {
+        const message = document.querySelector("#message")
+        console.log(message)
+        message.innerHTML = "Não foi possível acessar a Webcam"
+        message.classList.remove("hidden")
+    });
 
 snap.addEventListener('click', function () {
     context.drawImage(video, 0, 0, 640, 480);
@@ -27,7 +31,6 @@ snap.addEventListener('click', function () {
     });
 })
 
-
 button.addEventListener('click', function (e) {
     e.preventDefault()
     context.drawImage(video, 0, 0, 640, 480);
@@ -36,7 +39,6 @@ button.addEventListener('click', function (e) {
         const formData = new FormData();
         formData.append('file', file);
 
-        // Faça uma chamada fetch com os dados do formulário
         fetch('/api/face?person=1', {
             method: 'POST',
             body: formData

@@ -1,0 +1,41 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        * {
+            font-family: "Inter", sans-serif !important;
+        }
+
+        body {
+            @apply bg-neutral-100;
+        }
+
+        .menu-item {
+            @apply text-gray-200 px-4 py-1 rounded;
+        }
+
+        .active-menu-item {
+            @apply bg-blue-500 text-gray-200 px-4 py-1 rounded;
+        }
+
+        .button-primary {
+            @apply h-10 px-4 py-2 bg-blue-500 flex items-center gap-2 rounded-lg shadow justify-start text-center text-base font-medium text-white;
+        }
+
+        .button-danger {
+            @apply button-primary bg-red-500;
+        }
+
+        .message-error {
+            @apply bg-red-500 text-center text-white px-3 py-1 rounded opacity-90
+        }
+    </style>
+    <title>{#insert pageTitle}Streaming de Vídeo{/}</title>
+</head>
