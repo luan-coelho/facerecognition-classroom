@@ -1,4 +1,4 @@
 package com.luan.dto;
 
-public record FaceRecognitionResponseDTO(boolean faceDetected, String detail) {
+public record FaceRecognitionResponseDTO(boolean faceDetected, String person, String detail) {
 }

@@ -15,6 +15,6 @@ public class PersonService extends BaseService<Person, PersonRepository> {
         FaceRecognitionProcessing processing = new FaceRecognitionProcessing();
         boolean faceDetected = processing.faceDetected(person, image);
         String detail = faceDetected ? "Face detectada" : "Face não detectada";
-        return new FaceRecognitionResponseDTO(faceDetected, detail);
+        return new FaceRecognitionResponseDTO(faceDetected, person.getName(), detail);
     }
 }

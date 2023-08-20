@@ -8,38 +8,40 @@ navigator.mediaDevices.getUserMedia({video: true})
     .then(stream => video.srcObject = stream)
     .catch(() => {
         const message = document.querySelector("#message")
-        console.log(message)
         message.innerHTML = "Não foi possível acessar a Webcam"
-        message.classList.remove("hidden")
+        message.parentElement.classList.remove("d-none")
     });
+
+video.addEventListener('play', function () {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+});
 
 snap.addEventListener('click', function () {
-    context.drawImage(video, 0, 0, 640, 480);
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(blob => {
         const file = new File([blob], "image.jpg", {type: 'image/jpeg', lastModified: new Date()});
         const formData = new FormData();
         formData.append('file', file);
 
-        // Criar um elemento de imagem e definir o src como a URL do blob
         const img = new Image();
         img.src = URL.createObjectURL(blob);
-        img.width = 640;
-        img.height = 480;
+        img.width = canvas.width;
+        img.height = canvas.height;
 
-        // Substituir o elemento de vídeo pelo elemento de imagem
         video.parentNode.replaceChild(img, video);
     });
-})
+});
 
 button.addEventListener('click', function (e) {
-    e.preventDefault()
-    context.drawImage(video, 0, 0, 640, 480);
+    e.preventDefault();
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(blob => {
         const file = new File([blob], "image.jpg", {type: 'image/jpeg', lastModified: new Date()});
         const formData = new FormData();
         formData.append('file', file);
 
-        fetch('/api/face?person=1', {
+        fetch('/face?person=1', {
             method: 'POST',
             body: formData
         })

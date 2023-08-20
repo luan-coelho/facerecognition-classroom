@@ -9,17 +9,5 @@
 }
 
 body {
-    @apply bg-neutral-100;
-}
-
-.menu-item {
-    @apply text-gray-200 px-4 py-1 rounded;
-}
-
-.active-menu-item {
-    @apply bg-blue-500 text-gray-200 px-4 py-1 rounded;
-}
-
-.app-button {
-    @apply h-10 px-4 py-2 flex items-center gap-2 rounded-lg shadow justify-start text-center text-white text-base font-medium;
+    background-color: #afafaf;
 }

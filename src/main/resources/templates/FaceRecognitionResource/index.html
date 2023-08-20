@@ -1,22 +1,24 @@
 {#include components/layout}{#pageTitle}Presença{/pageTitle}
 
-    <div class="flex items-center justify-center">
-        <span id="message" class="message-error"></span>
+    <div class="d-flex align-items-center justify-content-center mt-5">
+        <div class="text-center w-50 d-none alert alert-danger" role="alert">
+            <span id="message"></span>
+        </div>
     </div>
 
-    <div class="flex items-center justify-center flex-col gap-4">
-        <video class="rounded-full" id="video" autoplay></video>
-        <div class="flex items-center justify-center gap-2">
-            <button id="snap" class="button-primary">Tirar Foto</button>
+    <div class="d-flex align-items-center justify-content-center flex-column gap-4">
+        <video class="rounded-pill" id="video" autoplay></video>
+        <div class="d-flex justify-content-center gap-2">
+            <button id="snap" class="btn btn-secondary">Tirar Foto</button>
             <form id="form" enctype="multipart/form-data">
-                <input class="hidden" id="file" type="file" name="file" accept="image/*">
-                <button id="button-enviar" class="button-primary" type="submit">Enviar</button>
+                <input class="d-none" id="file" type="file" name="file" accept="image/*">
+                <button id="button-enviar" class="btn btn-primary" type="submit">Enviar</button>
             </form>
         </div>
     </div>
 
     <div>
-        <canvas class="w-9/12 m-0" id="canvas"></canvas>
+        <canvas class="rounded-pill" id="canvas"></canvas>
     </div>
 
 {/include}
