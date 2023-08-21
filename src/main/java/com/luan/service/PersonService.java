@@ -1,6 +1,6 @@
 package com.luan.service;
 
-import com.luan.PersonRepository;
+import com.luan.repository.PersonRepository;
 import com.luan.dto.FaceRecognitionResponseDTO;
 import com.luan.model.Person;
 import jakarta.enterprise.context.ApplicationScoped;

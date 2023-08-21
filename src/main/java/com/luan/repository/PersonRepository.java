@@ -1,7 +1,6 @@
-package com.luan;
+package com.luan.repository;
 
 import com.luan.model.Person;
-import com.luan.repository.BaseRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
